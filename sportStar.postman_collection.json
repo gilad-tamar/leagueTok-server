@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "3cab2355-e2db-4f7a-a1f0-c4988249b697",
+		"name": "sportStar",
+		"description": "sportStar mongo api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[POST] /Categories",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "SHIRTS",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "Male",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] /Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] /Categories/:category _id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/Categories/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Categories",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] /Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/Products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] /Products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ultraboost 20",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "male",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "brand",
+							"value": "adidas",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "",
+							"type": "file"
+						},
+						{
+							"key": "price",
+							"value": "590",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "stock[0]['size']",
+							"value": "41",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "stock[0]['quantity']",
+							"value": "4",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "stock[1][0]",
+							"value": "42",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[1][1]",
+							"value": "5",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "categoryId",
+							"value": "5ff9baf397e7c91a801e44c5",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] /Products/:product _id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/Products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
