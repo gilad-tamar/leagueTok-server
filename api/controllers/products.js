@@ -5,7 +5,7 @@ const Category = require('../models/category');
 
 module.exports = {
     getAllProducts: (req, res) => {
-        Product.find().populate('categoryId', 'name').then((products) => {
+        Product.find().populate('category').then((products) => {
             res.status(200).json({
                 products
             })
@@ -48,7 +48,7 @@ module.exports = {
                 image: image.split('\\').join('/'),
                 price,
                 dateAdded: Date.now(),
-                categoryId
+                category
             });
 
             return product.save();

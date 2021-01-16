@@ -5,14 +5,14 @@ const upload = require('../middlewares/upload');
 //const checkAuth = require('../middlewares/checkAuth');
 
 const {
-    getAllCategories,
+    getCategories,
     createCategory,
     getCategory,
     updateCategory,
     deleteCategory
 } = require('../controllers/categories');
 
-router.get('/', getAllCategories);
+router.get('/', getCategories);
 router.get('/:categoryId', getCategory);
 
 //Add checkAuth

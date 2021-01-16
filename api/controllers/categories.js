@@ -2,8 +2,15 @@ const mongoose = require('mongoose');
 const Category = require('../models/category');
 
 module.exports = {
-    getAllCategories: (req, res) => {
-        Category.find().then((categories) => {
+    getCategories: (req, res) => {
+        let regExp;
+        const gender = req.query.gender;
+        
+        //Check if get gender param and build the regex 
+        (gender) ? regExp = `^${gender}$` : regExp = '';
+
+        Category.find({gender: new RegExp(regExp,'i')})
+        .then((categories) => {
             res.status(200).json({
                 categories
             })

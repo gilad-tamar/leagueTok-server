@@ -10,7 +10,7 @@ const productSchema = mongoose.Schema({
     price: { type: Number, required: true },
     stock: [{type: String},{type: Number}],
     dateAdded: { type: Date, required: true},
-    categoryId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Category' }
+    category: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Category' }
 });
 
 module.exports = mongoose.model('Product', productSchema);
