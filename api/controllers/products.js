@@ -4,8 +4,18 @@ const Stock = require('../models/stock');
 const Category = require('../models/category');
 
 module.exports = {
-    getAllProducts: (req, res) => {
-        Product.find().populate('category').then((products) => {
+    getProducts: (req, res) => {
+        const {name, brand, minPrice=0, maxPrice=9999999 } = req.query
+        let nameRegExp, brandRegExp;
+
+        //Check if get params and build the regular expressions 
+        (name) ? nameRegExp = `${name}` : nameRegExp = '';
+        (brand) ? brandRegExp = `^${brand}$` : brandRegExp = '';
+
+        Product.find({ $and: [{ name: new RegExp(nameRegExp,'i') },
+                                { brand: new RegExp(brandRegExp,'i')},
+                                { price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]})
+        .populate('category').then((products) => {
             res.status(200).json({
                 products
             })
@@ -124,5 +134,16 @@ module.exports = {
                 })
             });
         })
+    },
+    getBrands: (req, res) => {
+        Product.distinct('brand').then((brands) => {
+            res.status(200).json({
+                brands
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
     }
 }

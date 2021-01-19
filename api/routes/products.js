@@ -5,14 +5,16 @@ const upload = require('../middlewares/upload');
 //const checkAuth = require('../middlewares/checkAuth');
 
 const {
-    getAllProducts,
+    getProducts,
     getProduct,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getBrands
 } = require('../controllers/products');
 
-router.get('/', getAllProducts);
+router.get('/', getProducts);
+router.get('/brands', getBrands);
 router.get('/:productId', getProduct);
 
 //Add checkAuth

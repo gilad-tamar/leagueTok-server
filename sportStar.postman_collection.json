@@ -7,6 +7,35 @@
 	},
 	"item": [
 		{
+			"name": "[GET] /Categories?gender=\"\"",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/Categories?gender=men",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Categories"
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "men"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "[POST] /Categories",
 			"request": {
 				"method": "POST",
@@ -23,42 +52,20 @@
 						{
 							"key": "title",
 							"value": "SHIRTS",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "gender",
 							"value": "Male",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "image",
-							"description": "",
-							"type": "file"
+							"type": "file",
+							"src": null
 						}
 					]
 				},
-				"url": {
-					"raw": "http://localhost:8080/Categories",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"Categories"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[GET] /Categories",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://localhost:8080/Categories",
 					"protocol": "http",
@@ -98,13 +105,16 @@
 			"response": []
 		},
 		{
-			"name": "[GET] /Products",
+			"name": "[GET] /Products?name&brand&minPrice&maxPrice",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8080/Products",
+					"raw": "http://localhost:8080/Products?name=&brand=BOSS&minPrice=500&maxPrice=1500",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -112,6 +122,48 @@
 					"port": "8080",
 					"path": [
 						"Products"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": ""
+						},
+						{
+							"key": "brand",
+							"value": "BOSS"
+						},
+						{
+							"key": "minPrice",
+							"value": "500"
+						},
+						{
+							"key": "maxPrice",
+							"value": "1500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] /Products/:product_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/Products/6003269ad440fd0fecc788cb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products",
+						"6003269ad440fd0fecc788cb"
 					]
 				}
 			},
@@ -124,7 +176,10 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"type": "text",
+						"name": "Content-Type",
+						"value": "application/json",
+						"disabled": false
 					}
 				],
 				"body": {
@@ -132,63 +187,44 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Ultraboost 20",
-							"description": "",
+							"value": "Ultraboost 30",
 							"type": "text"
 						},
 						{
 							"key": "gender",
 							"value": "male",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "brand",
 							"value": "adidas",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "image",
-							"description": "",
-							"type": "file"
+							"type": "file",
+							"src": ""
 						},
 						{
 							"key": "price",
 							"value": "590",
-							"description": "",
 							"type": "text"
 						},
 						{
-							"key": "stock[0]['size']",
-							"value": "41",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "stock[0]['quantity']",
-							"value": "4",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "stock[1][0]",
-							"value": "42",
-							"description": "",
+							"key": "stock[0]",
+							"value": "{size = 41, quantity = 5}",
 							"type": "text",
 							"disabled": true
 						},
 						{
-							"key": "stock[1][1]",
-							"value": "5",
-							"description": "",
+							"key": "stock[1]",
+							"value": "{size = 42, quantity = 5}",
 							"type": "text",
 							"disabled": true
 						},
 						{
 							"key": "categoryId",
 							"value": "5ff9baf397e7c91a801e44c5",
-							"description": "",
 							"type": "text"
 						}
 					]
@@ -214,7 +250,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/Products/",
+					"raw": "http://localhost:8080/Products/60070939df2789650c9d5457",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -222,7 +258,31 @@
 					"port": "8080",
 					"path": [
 						"Products",
-						""
+						"60070939df2789650c9d5457"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] /Products/Brands",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/Products/Brands",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products",
+						"Brands"
 					]
 				}
 			},
