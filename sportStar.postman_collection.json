@@ -114,7 +114,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Products?name=&brand=BOSS&minPrice=500&maxPrice=1500",
+					"raw": "http://localhost:8080/Products?name=&brand=BOSS&minPrice=500&maxPrice=1500&categoryId=",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -139,6 +139,10 @@
 						{
 							"key": "maxPrice",
 							"value": "1500"
+						},
+						{
+							"key": "categoryId",
+							"value": ""
 						}
 					]
 				}

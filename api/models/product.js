@@ -4,7 +4,6 @@ const Stock = require('../models/stock');
 const productSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
-    gender: { type: String },
     brand: { type: String },
     image: { type: String, required: true},
     price: { type: Number, required: true },

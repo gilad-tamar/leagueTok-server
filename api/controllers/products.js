@@ -5,16 +5,30 @@ const Category = require('../models/category');
 
 module.exports = {
     getProducts: (req, res) => {
-        const {name, brand, minPrice=0, maxPrice=9999999 } = req.query
-        let nameRegExp, brandRegExp;
+        const {name, brand, minPrice=0, maxPrice=9999999, categoryId } = req.query
+        let nameRegExp, brandRegExp, categoryIdRegExp;
+        let categoryIdCriteria = {};
 
-        //Check if get params and build the regular expressions 
+        // Check if get params and build the regular expressions 
         (name) ? nameRegExp = `${name}` : nameRegExp = '';
         (brand) ? brandRegExp = `^${brand}$` : brandRegExp = '';
+        
+        // Check if categoryId is a valid ObjectId than create criteria of it
+        // else check if categoryId is defined than return empty products
+        if(mongoose.Types.ObjectId.isValid(categoryId)) {
+            categoryIdCriteria = {category: categoryId};
+        }
+        else if (categoryId) {
+            res.status(200).json({
+                products: []
+            })
+        }
 
         Product.find({ $and: [{ name: new RegExp(nameRegExp,'i') },
                                 { brand: new RegExp(brandRegExp,'i')},
-                                { price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]})
+                                { price: { $gte: minPrice } }, { price: { $lte: maxPrice } },
+                                categoryIdCriteria
+                            ]})
         .populate('category').then((products) => {
             res.status(200).json({
                 products
@@ -40,7 +54,7 @@ module.exports = {
     },
     createProduct: (req, res) => {
         const { path: image } = req.file;
-        const { name, gender, brand, stock, price, categoryId } = req.body;
+        const { name, brand, stock, price, categoryId } = req.body;
 
         Category.findById(categoryId).then((category) => {
             if (!category) {
@@ -52,7 +66,6 @@ module.exports = {
             const product = new Product({
                 _id: new mongoose.Types.ObjectId(),
                 name,
-                gender,
                 brand,
                 stock: new Stock(stock),
                 image: image.split('\\').join('/'),
