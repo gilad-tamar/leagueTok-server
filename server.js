@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 8080;
 const app = express();
+const cors = require('cors');
+app.use(cors());
 
 const productsRoutes = require('./api/routes/products');
 const categoriesRoutes = require('./api/routes/categories');
