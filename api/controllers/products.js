@@ -42,7 +42,8 @@ module.exports = {
     getProduct: (req, res) => {
         const productId = req.params.productId;
         
-        Product.findById(productId).then((product) => {
+        Product.findById(productId)
+        .populate('category').then((product) => {
             res.status(200).json({
                 product
             })
