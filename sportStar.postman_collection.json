@@ -52,7 +52,8 @@
 						{
 							"key": "gender",
 							"value": "Men",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "image",
@@ -157,7 +158,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Products?categoryId=600c12cc346a3853a475b403",
+					"raw": "http://localhost:8080/Products?brands[0]=Lacoste&brands[1]=adidas",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -174,7 +175,7 @@
 						},
 						{
 							"key": "brand",
-							"value": "BOS",
+							"value": "adidasa",
 							"disabled": true
 						},
 						{
@@ -189,7 +190,26 @@
 						},
 						{
 							"key": "categoryId",
-							"value": "600c12cc346a3853a475b403"
+							"value": "600c12cc346a3853a475b403",
+							"disabled": true
+						},
+						{
+							"key": "sizes[0]",
+							"value": "47",
+							"disabled": true
+						},
+						{
+							"key": "sizes[1]",
+							"value": "36",
+							"disabled": true
+						},
+						{
+							"key": "brands[0]",
+							"value": "Lacoste"
+						},
+						{
+							"key": "brands[1]",
+							"value": "adidas"
 						}
 					]
 				},
@@ -207,7 +227,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Products/6003269ad440fd0fecc788cb",
+					"raw": "http://localhost:8080/Products/600c6105a5061759540295ca",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -215,7 +235,7 @@
 					"port": "8080",
 					"path": [
 						"Products",
-						"6003269ad440fd0fecc788cb"
+						"600c6105a5061759540295ca"
 					]
 				},
 				"description": "קבלת מוצר לפי ID"
@@ -243,13 +263,8 @@
 							"type": "text"
 						},
 						{
-							"key": "gender",
-							"value": "male",
-							"type": "text"
-						},
-						{
 							"key": "brand",
-							"value": "adidas",
+							"value": "adidasa",
 							"type": "text"
 						},
 						{
@@ -294,7 +309,7 @@
 						},
 						{
 							"key": "categoryId",
-							"value": "600c12cc346a3853a475b403",
+							"value": "5ff9bab397e7c91a801e44c1",
 							"type": "text"
 						}
 					]
@@ -419,7 +434,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/Products/600c5076346a3853a475b404",
+					"raw": "http://localhost:8080/Products/600c6105a5061759540295ca",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -427,7 +442,7 @@
 					"port": "8080",
 					"path": [
 						"Products",
-						"600c5076346a3853a475b404"
+						"600c6105a5061759540295ca"
 					]
 				}
 			},

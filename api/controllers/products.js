@@ -38,17 +38,17 @@ module.exports = {
   getProducts: (req, res) => {
     const {
       name,
-      brand,
+      brands,
+      sizes,
       minPrice = 0,
       maxPrice = 9999999,
       categoryId,
     } = req.query;
-    let nameRegExp, brandRegExp, categoryIdRegExp;
-    let categoryIdCriteria = {};
+    let nameRegExp, brandRegExp;
+    let categoryIdCriteria = {}, sizesCriteria = {}, brandsCriteria = {};
 
-    // Check if get params and build the regular expressions
+    // Check if get name param and build the regular expressions
     name ? (nameRegExp = `${name}`) : (nameRegExp = "");
-    brand ? (brandRegExp = `^${brand}$`) : (brandRegExp = "");
 
     // Check if categoryId is a valid ObjectId than create criteria of it
     // else check if categoryId is defined than return empty products
@@ -60,10 +60,19 @@ module.exports = {
       });
     }
 
+    if (brands) {
+      brandsCriteria = { brand: {$in: brands} };
+    }
+
+    if (sizes) {
+      sizesCriteria = { stock: { $elemMatch: { size: { $in: sizes }, quantity: { $gt: 0 } } } };
+    }
+
     Product.find({
       $and: [
         { name: new RegExp(nameRegExp, "i") },
-        { brand: new RegExp(brandRegExp, "i") },
+        brandsCriteria,
+        sizesCriteria,
         { price: { $gte: minPrice } },
         { price: { $lte: maxPrice } },
         categoryIdCriteria,
