@@ -48,6 +48,10 @@ module.exports = {
                 message: 'Created category'
             })
         }).catch(error => {
+            // If upload image than delete it
+            if (image) {
+                deleteCategoryImage(image);
+            }
             res.status(500).json({
                 error
             })
