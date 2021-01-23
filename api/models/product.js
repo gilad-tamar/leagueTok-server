@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const Stock = require('../models/stock');
+// const stockSchema = mongoose.Schema({
+//     size: { type: String ,unique: true},
+//     quantity: { type: Number }
+// },{ _id : false });
 
 const productSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -7,7 +10,10 @@ const productSchema = mongoose.Schema({
     brand: { type: String },
     image: { type: String, required: true},
     price: { type: Number, required: true },
-    stock: [{type: String},{type: Number}],
+    stock: { type: Array, 
+                size: { type: String ,unique: true},
+                quantity: { type: Number }
+            },
     dateAdded: { type: Date, required: true},
     category: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Category' }
 });

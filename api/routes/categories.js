@@ -17,7 +17,7 @@ router.get('/:categoryId', getCategory);
 
 //Add checkAuth
 router.post('/', upload.uploadCategory.single('image'), createCategory);
-router.patch('/:categoryId', updateCategory);
+router.patch('/:categoryId', upload.uploadCategory.single('image'), updateCategory);
 router.delete('/:categoryId', deleteCategory);
 
 module.exports = router;

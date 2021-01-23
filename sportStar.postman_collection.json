@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/Categories?gender=men",
+					"raw": "http://localhost:8080/Categories",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -24,14 +24,9 @@
 					"port": "8080",
 					"path": [
 						"Categories"
-					],
-					"query": [
-						{
-							"key": "gender",
-							"value": "men"
-						}
 					]
-				}
+				},
+				"description": "קבלת קטגוריות"
 			},
 			"response": []
 		},
@@ -51,18 +46,18 @@
 					"formdata": [
 						{
 							"key": "title",
-							"value": "SHIRTS",
+							"value": "test",
 							"type": "text"
 						},
 						{
 							"key": "gender",
-							"value": "Male",
+							"value": "Men",
 							"type": "text"
 						},
 						{
 							"key": "image",
 							"type": "file",
-							"src": null
+							"src": ""
 						}
 					]
 				},
@@ -76,12 +71,59 @@
 					"path": [
 						"Categories"
 					]
-				}
+				},
+				"description": "העלאת קטגוריה"
 			},
 			"response": []
 		},
 		{
-			"name": "[DELETE] /Categories/:category _id",
+			"name": "[PATCH] /Categories/:categoryId",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "test3",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "Men",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Categories/600c12cc346a3853a475b403",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Categories",
+						"600c12cc346a3853a475b403"
+					]
+				},
+				"description": "העלאת קטגוריה"
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] /Categories/:categoryId",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -90,7 +132,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Categories/",
+					"raw": "http://localhost:8080/Categories/600c12cc346a3853a475b403",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -98,9 +140,10 @@
 					"port": "8080",
 					"path": [
 						"Categories",
-						""
+						"600c12cc346a3853a475b403"
 					]
-				}
+				},
+				"description": "מחיקת קטגוריה"
 			},
 			"response": []
 		},
@@ -114,7 +157,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Products?name=&brand=BOSS&minPrice=500&maxPrice=1500&categoryId=",
+					"raw": "http://localhost:8080/Products?categoryId=600c12cc346a3853a475b403",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -126,31 +169,36 @@
 					"query": [
 						{
 							"key": "name",
-							"value": ""
+							"value": "30",
+							"disabled": true
 						},
 						{
 							"key": "brand",
-							"value": "BOSS"
+							"value": "BOS",
+							"disabled": true
 						},
 						{
 							"key": "minPrice",
-							"value": "500"
+							"value": "500",
+							"disabled": true
 						},
 						{
 							"key": "maxPrice",
-							"value": "1500"
+							"value": "1500",
+							"disabled": true
 						},
 						{
 							"key": "categoryId",
-							"value": ""
+							"value": "600c12cc346a3853a475b403"
 						}
 					]
-				}
+				},
+				"description": "קבלת מוצרים"
 			},
 			"response": []
 		},
 		{
-			"name": "[GET] /Products/:product_id",
+			"name": "[GET] /Products/:productId",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -169,7 +217,8 @@
 						"Products",
 						"6003269ad440fd0fecc788cb"
 					]
-				}
+				},
+				"description": "קבלת מוצר לפי ID"
 			},
 			"response": []
 		},
@@ -180,10 +229,9 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"type": "text",
 						"name": "Content-Type",
-						"value": "application/json",
-						"disabled": false
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -191,7 +239,7 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Ultraboost 30",
+							"value": "Ultraboost 3000",
 							"type": "text"
 						},
 						{
@@ -215,20 +263,38 @@
 							"type": "text"
 						},
 						{
-							"key": "stock[0]",
-							"value": "{size = 41, quantity = 5}",
-							"type": "text",
-							"disabled": true
+							"key": "stock[0][size]",
+							"value": "37",
+							"type": "text"
 						},
 						{
-							"key": "stock[1]",
-							"value": "{size = 42, quantity = 5}",
-							"type": "text",
-							"disabled": true
+							"key": "stock[0][quantity]",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "stock[1][size]",
+							"value": "38",
+							"type": "text"
+						},
+						{
+							"key": "stock[1][quantity]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "stock[2][size]",
+							"value": "47",
+							"type": "text"
+						},
+						{
+							"key": "stock[2][quantity]",
+							"value": "9",
+							"type": "text"
 						},
 						{
 							"key": "categoryId",
-							"value": "5ff9baf397e7c91a801e44c5",
+							"value": "600c12cc346a3853a475b403",
 							"type": "text"
 						}
 					]
@@ -243,7 +309,106 @@
 					"path": [
 						"Products"
 					]
-				}
+				},
+				"description": "העלאת מוצר"
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH] /Products/:peoduct_id",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "new2",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "brand",
+							"value": "adidas",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "price",
+							"value": "600",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[0][size]",
+							"value": "37",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[0][quantity]",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[1][size]",
+							"value": "38",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[1][quantity]",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[2][size]",
+							"value": "38",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "stock[2][quantity]",
+							"value": "9",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "categoryId",
+							"value": "5ff9baf397e7c91a801e44c5",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Products/600c5076346a3853a475b406",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Products",
+						"600c5076346a3853a475b406"
+					]
+				},
+				"description": "עדכון מוצר"
 			},
 			"response": []
 		},
@@ -254,7 +419,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/Products/60070939df2789650c9d5457",
+					"raw": "http://localhost:8080/Products/600c5076346a3853a475b404",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -262,7 +427,7 @@
 					"port": "8080",
 					"path": [
 						"Products",
-						"60070939df2789650c9d5457"
+						"600c5076346a3853a475b404"
 					]
 				}
 			},

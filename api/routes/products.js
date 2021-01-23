@@ -19,7 +19,7 @@ router.get('/:productId', getProduct);
 
 //Add checkAuth
 router.post('/', upload.uploadProduct.single('image') ,createProduct);
-router.patch('/:productId', updateProduct);
+router.patch('/:productId', upload.uploadProduct.single('image'), updateProduct);
 router.delete('/:productId', deleteProduct);
 
 module.exports = router;

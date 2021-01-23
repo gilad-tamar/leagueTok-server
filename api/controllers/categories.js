@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 const Category = require('../models/category');
+const fs = require("fs");
+
+// Delete category image
+function deleteCategoryImage(categoryImage) {
+    fs.unlink(categoryImage, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("Category Image Deleted");
+      }
+    });
+  }
 
 module.exports = {
     getCategories: (req, res) => {
@@ -57,27 +68,68 @@ module.exports = {
     },
     updateCategory: (req, res) => {
         const categoryId = req.params.categoryId;
+        let categoryCurrImage;
+        let image;
+    
+       // Check if upload image to replace current image
+        if (req.file) {
+            image = req.file.path;
+            req.body.image = (image.split("\\").join("/"));
+        }
+
+        // Check if gender is valid
+        if (req.body.gender && ((req.body.gender.toLowerCase() != "men" )&&(req.body.gender.toLowerCase() != "women"))) {
+            // If upload image than delete it
+            if (image) {
+                deleteCategoryImage(image);
+            }
+            return res.status(500).json({
+                message: 'Gender is not valid (gender can be men or women)',
+            });
+        }
 
         Category.findById(categoryId).then((category) => {
             if (!category) {
+                 // If upload image than delete it
+                if (image) {
+                    deleteCategoryImage(image);
+                }
                 return res.status(404).json({
                     message: 'Category not found'
                 })
             }
-        }).then(() => {
+            categoryCurrImage = category.image;
             Category.updateOne({ _id: categoryId }, req.body).then(() => {
+                // Check if replace image than delete old one
+                if (image) {
+                    deleteCategoryImage(categoryCurrImage);
+                }
                 res.status(200).json({
                     message: 'Category Updated'
                 })
             }).catch(error => {
-                res.status(500).json({
+                // If upload image than delete it
+                if (image) {
+                    deleteCategoryImage(image);
+                }
+                return res.status(500).json({
                     error
                 })
+            });
+
+        }).catch((error) => {
+            // If upload image than delete it
+            if (image) {
+                deleteCategoryImage(image);
+            }
+            return res.status(500).json({
+                error,
             });
         })
     },
     deleteCategory: (req, res) => {
         const categoryId = req.params.categoryId;
+        let categoryImage;
 
         Category.findById(categoryId).then((category) => {
             if (!category) {
@@ -85,9 +137,11 @@ module.exports = {
                     message: 'Category not found'
                 })
             }
-        }).then(() => {
+            categoryImage = category.image;
             Category.deleteOne({ _id: categoryId }).then(() => {
-                res.status(200).json({
+                // Delete category image
+                deleteCategoryImage(categoryImage);
+                return res.status(200).json({
                     message: `Category _id:${categoryId} Deleted`
                 })
             }).catch(error => {
@@ -95,6 +149,10 @@ module.exports = {
                     error
                 })
             });
-        })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
     }
 }
