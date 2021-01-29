@@ -39,11 +39,11 @@ module.exports = {
     const {
       name,
       brands,
-      sizes,
       minPrice = 0,
       maxPrice = 9999999,
       categoryId,
     } = req.query;
+    let { sizes } = req.query;
     let nameRegExp, brandRegExp;
     let categoryIdCriteria = {}, sizesCriteria = {}, brandsCriteria = {};
 
@@ -65,6 +65,9 @@ module.exports = {
     }
 
     if (sizes) {
+      if (typeof(sizes) == 'string') {
+        sizes = [sizes];
+      }
       sizesCriteria = { stock: { $elemMatch: { size: { $in: sizes }, quantity: { $gt: 0 } } } };
     }
 
