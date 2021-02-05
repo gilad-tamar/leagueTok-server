@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "[GET] /Categories?gender=\"\"",
+			"name": "[GET] /Categories?title=\"\"&gender=\"\"",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -52,8 +52,7 @@
 						{
 							"key": "gender",
 							"value": "Men",
-							"type": "text",
-							"disabled": true
+							"type": "text"
 						},
 						{
 							"key": "image",
@@ -133,7 +132,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Categories/600c12cc346a3853a475b403",
+					"raw": "http://localhost:8080/Categories/600c8360d35ebe0d68d54888",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -141,7 +140,7 @@
 					"port": "8080",
 					"path": [
 						"Categories",
-						"600c12cc346a3853a475b403"
+						"600c8360d35ebe0d68d54888"
 					]
 				},
 				"description": "מחיקת קטגוריה"
@@ -158,7 +157,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/Products?brands[0]=Lacoste&brands[1]=adidas",
+					"raw": "http://localhost:8080/Products?",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -190,7 +189,7 @@
 						},
 						{
 							"key": "categoryId",
-							"value": "600c12cc346a3853a475b403",
+							"value": "5ff9bab397e7c91a801e44c1",
 							"disabled": true
 						},
 						{
@@ -205,11 +204,13 @@
 						},
 						{
 							"key": "brands[0]",
-							"value": "Lacoste"
+							"value": "Lacoste",
+							"disabled": true
 						},
 						{
 							"key": "brands[1]",
-							"value": "adidas"
+							"value": "adidas",
+							"disabled": true
 						}
 					]
 				},
@@ -280,36 +281,47 @@
 						{
 							"key": "stock[0][size]",
 							"value": "37",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "stock[0][quantity]",
 							"value": "3",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "stock[1][size]",
 							"value": "38",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "stock[1][quantity]",
 							"value": "1",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "stock[2][size]",
 							"value": "47",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "stock[2][quantity]",
 							"value": "9",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "categoryId",
-							"value": "5ff9bab397e7c91a801e44c1",
+							"value": "600c8360d35ebe0d68d54888",
+							"type": "text"
+						},
+						{
+							"key": "stock[0]",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -434,7 +446,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/Products/600c6105a5061759540295ca",
+					"raw": "http://localhost:8080/Products/600c68c8903c5d48ec876075",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -442,7 +454,7 @@
 					"port": "8080",
 					"path": [
 						"Products",
-						"600c6105a5061759540295ca"
+						"600c68c8903c5d48ec876075"
 					]
 				}
 			},

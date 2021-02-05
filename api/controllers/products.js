@@ -44,7 +44,7 @@ module.exports = {
       categoryId,
     } = req.query;
     let { sizes } = req.query;
-    let nameRegExp, brandRegExp;
+    let nameRegExp;
     let categoryIdCriteria = {}, sizesCriteria = {}, brandsCriteria = {};
 
     // Check if get name param and build the regular expressions
