@@ -1,51 +1,36 @@
 const multer = require('multer');
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    console.log(cb, file)
+    if (file.mimetype === 'video/gif' ||
+        file.mimetype === 'video/mp4' ||
+        file.mimetype === 'video/ogg' ||
+        file.mimetype === 'video/wmv' ||
+        file.mimetype === 'video/x-flv' ||
+        file.mimetype === 'video/avi') {
         cb(null, true);
     }
-
     cb(null, false)
 }
 
-//Product
-const storageProducts = multer.diskStorage({
+const storageVideos = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/products');
+        cb(null, '/uploads');
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`);
     }
 })
 
-const uploadProduct = multer({
-    storage: storageProducts,
+const uploadVideo = multer({
+    storage: storageVideos,
     limits: {
-        fileSize: 1024 * 1024 * 2
-    },
-    fileFilter
-});
-
-//Category
-const storageCategories = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/categories');
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-})
-
-const uploadCategory = multer({
-    storage: storageCategories,
-    limits: {
-        fileSize: 1024 * 1024 * 2
+        fileSize: 1024 * 1024 * 1024 
     },
     fileFilter
 });
 
 //Exports
 module.exports = {
-    uploadProduct: uploadProduct,
-    uploadCategory: uploadCategory
+    uploadVideo: uploadVideo
 }

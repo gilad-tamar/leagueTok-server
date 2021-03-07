@@ -3,14 +3,16 @@ dotenv.config();
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+
 const port = process.env.PORT || 8080;
 const app = express();
 const cors = require('cors');
 app.use(cors());
 
-const productsRoutes = require('./api/routes/products');
-const categoriesRoutes = require('./api/routes/categories');
-//const usersRoutes = require('./api/routes/users');
+const db = require('./db/db')
+const database = db()
+
+const videoRoutes = require('./api/routes/video');
 
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
@@ -31,9 +33,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/products', productsRoutes);
-app.use('/categories', categoriesRoutes);
-//app.use('/users', usersRoutes);
+app.use('/video', videoRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
@@ -50,15 +50,12 @@ app.use((error, req, res, next) => {
     })
 })
 
-
-mongoose.connect(`mongodb+srv://${process.env.MongoDB_User}:${process.env.MongoDB_Password}@sportstar.deqis.mongodb.net/sportstar?retryWrites=true&w=majority`,{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-})
-.then(() => {
-  console.log('Connected to database');
-  app.listen(port, () => {
+app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
-  });
 });
+
+// database.ref('a/').push({
+//     username: 'tttt',
+//     email: 'b',
+//     profile_picture : 'c'
+// });
