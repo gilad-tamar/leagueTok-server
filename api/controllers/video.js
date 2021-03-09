@@ -30,15 +30,18 @@ module.exports = {
     const videoKey = newVideo.key;
 
     let options = { 
-      args: ['1', '2'], //An argument which can be accessed in the script using sys.argv[1]
+      args: ["C:\\Users\\noamd\\Documents\\final-proj\\sportstar-server\\videos\\1\\openpose", "C:\\Users\\noamd\\Documents\\final-proj\\sportstar-server\\videos\\1\\Imitations\\1\\openpose"], //An argument which can be accessed in the script using sys.argv[1]
     }; 
 
     try{
-      PythonShell.run('./scripts/script1.py', options, (err, result)=>{ 
+      PythonShell.run('./scripts/leagueTokOpenPose.py', options, (err, result)=>{ 
         if (err){
           console.log(err)
           res.send('Failed on python');
+          return;
         }
+
+        console.log(result)
 
         const newRef = database.ref(`imitationVideos/${videoKey}/`);
 
@@ -52,9 +55,7 @@ module.exports = {
           res.send('failed')
         }
 
-        console.log('result: ', ); 
-
-        res.send(result[0])
+        res.send({"result": result[0]})
       });
     } catch(err){
       console.log(err)
