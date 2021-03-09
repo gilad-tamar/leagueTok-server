@@ -30,7 +30,7 @@ module.exports = {
     const videoKey = newVideo.key;
 
     let options = { 
-      args: ["C:\\Users\\noamd\\Documents\\final-proj\\sportstar-server\\videos\\1\\openpose", "C:\\Users\\noamd\\Documents\\final-proj\\sportstar-server\\videos\\1\\Imitations\\1\\openpose"], //An argument which can be accessed in the script using sys.argv[1]
+      args: ["./videos/1/openpose", "./videos/1/Imitations/1/openpose"] //An argument which can be accessed in the script using sys.argv[1]
     }; 
 
     try{
