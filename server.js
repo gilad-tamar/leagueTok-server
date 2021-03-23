@@ -2,7 +2,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -13,6 +12,7 @@ const db = require('./db/db')
 const database = db()
 
 const videoRoutes = require('./api/routes/video');
+const userRoutes = require('./api/routes/user');
 
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/video', videoRoutes);
+app.use('/user', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');

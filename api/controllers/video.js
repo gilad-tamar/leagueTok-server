@@ -9,17 +9,17 @@ const video = require("../models/video");
 module.exports = {
     createVideo: async(req, res) => {
     const { sourceId, link, uid } = req.body;
-    const ref = database.ref('imitationVideos/');
+    const ref = database.collection('imitationVideos');
 
     let newVideo;
 
     try{
-      newVideo = ref.push({
-       Url: link,
-       UID: uid,
-       Score: 0,
-       sourceId: sourceId,
-       UploadDate: Date()
+      newVideo = await ref.add({
+        Url: link,
+        UID: uid,
+        Score: 0,
+        sourceId: sourceId,
+        UploadDate: Date()
       });
     } catch(err){
       console.log('Failed')
@@ -27,7 +27,7 @@ module.exports = {
       res.send('failed')
     }
 
-    const videoKey = newVideo.key;
+    const videoKey = newVideo.id;
 
     let options = { 
       args: ["./videos/1/openpose", "./videos/1/Imitations/1/openpose"] //An argument which can be accessed in the script using sys.argv[1]
@@ -41,9 +41,7 @@ module.exports = {
           return;
         }
 
-        console.log(result)
-
-        const newRef = database.ref(`imitationVideos/${videoKey}/`);
+        const newRef = database.collection('imitationVideos').doc(videoKey);
 
         try{
           newRef.update({
