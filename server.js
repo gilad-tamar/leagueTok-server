@@ -13,6 +13,7 @@ const database = db()
 
 const videoRoutes = require('./api/routes/video');
 const userRoutes = require('./api/routes/user');
+const origVideoRoutes = require('./api/routes/originalVideo');
 
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/video', videoRoutes);
 app.use('/user', userRoutes);
+app.use('/originalVideo', origVideoRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
