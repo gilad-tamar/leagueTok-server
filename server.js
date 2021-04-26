@@ -11,7 +11,7 @@ app.use(cors());
 const db = require('./db/db')
 const database = db()
 
-const videoRoutes = require('./api/routes/video');
+const imitVideoRoutes = require('./api/routes/imitationVideo');
 const userRoutes = require('./api/routes/user');
 const origVideoRoutes = require('./api/routes/originalVideo');
 
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/video', videoRoutes);
+app.use('/imitationVideo', imitVideoRoutes);
 app.use('/user', userRoutes);
 app.use('/originalVideo', origVideoRoutes);
 
