@@ -26,10 +26,10 @@ module.exports = {
     },
 
     create: async (req, res) => {
-        // const { name, uri, performer } = req.body;
-        // var timestamp = admin.firestore.FieldValue.serverTimestamp();
-        // var origVideo = new OriginalVideo(null, name, uri, performer, timestamp, timestamp, false);
-        // var newVideo = await database.collection(ORIGINAL_VIDEOS_COLL).add(origVideo.getObject());
-        // res.status(200).send({ id: newVideo.id });
+        const { name, uri, performer } = req.body;
+        var timestamp = admin.firestore.FieldValue.serverTimestamp();
+        var origVideo = new OriginalVideo(null, name, uri, performer, timestamp, timestamp, false);
+        origVideo.id = (await database.collection(ORIGINAL_VIDEOS_COLL).add(origVideo.getObject())).id;
+        res.status(200).send({ id: origVideo.id });
     }
 }
