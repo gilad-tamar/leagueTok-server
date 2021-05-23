@@ -68,4 +68,26 @@ module.exports = {
 
     res.status(200).send(videos);
   },
+
+  getUserImitationVideos: async (req, res) => {
+    videos = [];
+    const lastUpdated = new admin.firestore.Timestamp(parseInt(req.params.lastUpdated), 0);
+    var snapshot = await database.collection(IMITATION_VIDEOS_COLL)
+      .where("uid", "==", req.params.uid).get();
+    snapshot.forEach((doc) => {
+        data = doc.data();
+        videos.push(new ImitationVideo(
+            doc.id, 
+            data.url,
+            data.uid,
+            data.sourceId,
+            data.score, 
+            data.uploadDate._seconds, 
+            data.lastUpdated._seconds, 
+            data.isDeleted
+        ));
+    });
+
+    res.status(200).send(videos);
+  },
 };
