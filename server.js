@@ -56,9 +56,3 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
-
-// database.ref('a/').push({
-//     username: 'tttt',
-//     email: 'b',
-//     profile_picture : 'c'
-// });

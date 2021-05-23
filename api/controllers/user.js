@@ -75,5 +75,15 @@ module.exports = {
                 message: 'Auth failed'
             });
         })
+    },
+    connect: async(req, res) => {
+        const { uid, fullName} = req.body;
+        const ref = database.collection('users')
+        await ref.add({
+            uid: uid,
+            fullName: fullName
+        });
+
+        res.send('user added')
     }
 }

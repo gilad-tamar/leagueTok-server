@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const checkAuth = require('../middlewares/checkAuth');
 
 const {
-    signup,
-    login
+    connect
 } = require('../controllers/user');
 
-router.post('/login', login);
-
-//Admin
-// consider add checkAuth middleware
-router.post('/signup', signup);
+router.post('/sign-up', connect);
 
 module.exports = router;
