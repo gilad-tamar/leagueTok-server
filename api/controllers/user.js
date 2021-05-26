@@ -91,9 +91,8 @@ module.exports = {
             })
         }
 
-        await ref.add({
-            uid: uid,
-            fullName: fullName,
+        await ref.doc(uid).set({
+            name: fullName,
             lastUpdated: timestamp,
             isDeleted: false
         });
