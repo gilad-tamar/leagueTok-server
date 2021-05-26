@@ -6,12 +6,12 @@ const ORIGINAL_VIDEOS_COLL = "originalVideos";
 
 module.exports = {
     getAll: async (req, res) => {
-        videos = [];
+        origVideos = [];
         const lastUpdated = new admin.firestore.Timestamp(parseInt(req.params.lastUpdated), 0);
         var snapshot = await database.collection(ORIGINAL_VIDEOS_COLL).where("lastUpdated", ">=", lastUpdated).get();
         snapshot.forEach((doc) => {
             data = doc.data();
-            videos.push(new OriginalVideo(
+            origVideos.push(new OriginalVideo(
                 doc.id, 
                 data.name, 
                 data.uri, 
@@ -22,7 +22,7 @@ module.exports = {
             ));
         });
     
-        res.status(200).send(videos);
+        res.status(200).send(origVideos);
     },
 
     create: async (req, res) => {
