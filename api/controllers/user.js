@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../../db/db')
 const database = db()
+const admin = require('firebase-admin');
 
 module.exports = {
     signup: async(req, res) => {
@@ -78,12 +79,27 @@ module.exports = {
     },
     connect: async(req, res) => {
         const { uid, fullName} = req.body;
+        var timestamp = admin.firestore.FieldValue.serverTimestamp();
         const ref = database.collection('users')
+
+        const snapshot = await ref.where('uid', '==', uid).get();
+
+        if (!snapshot.empty) {
+            console.log('User already exists');
+            return res.status(200).json({
+                message: 'User already exists'
+            })
+        }
+
         await ref.add({
             uid: uid,
-            fullName: fullName
+            fullName: fullName,
+            lastUpdated: timestamp,
+            isDeleted: false
         });
 
-        res.send('user added')
+        return res.status(200).json({
+            message: 'User added',
+        })
     }
 }
