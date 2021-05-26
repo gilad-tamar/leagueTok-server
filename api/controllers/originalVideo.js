@@ -38,9 +38,9 @@ module.exports = {
               return res.send(`failed create directory ${videosPath}\\4 \n error ${error}`);
         }
         //Run OpenPose
-        var url = 'C:\\collage\\final\\leagueTok-server\\videos\\3\\source3.mp4'
-        //var url = 'https://firebasestorage.googleapis.com/v0/b/leaguetok.appspot.com/o/videos%2FOriginals%2F3rls61Ny7xVNTZlg2IDZ.mp4?alt=media&token=44b05aff-bc81-4656-9fbd-b20eb1887544'
-        exec(`bin\\OpenPoseDemo.exe --video ${url} --write_json ${videosPath}\\4\\openpose --net_resolution 320x320 --part_candidates`,
+        //var url = 'C:\\collage\\final\\leagueTok-server\\videos\\3\\source3.mp4'
+        var url = 'https://firebasestorage.googleapis.com/v0/b/leaguetok.appspot.com/o/videos%2FOriginals%2F3rls61Ny7xVNTZlg2IDZ.mp4?alt=media&token=44b05aff-bc81-4656-9fbd-b20eb1887544'
+        exec(`bin\\OpenPoseDemo.exe --video "${url}" --write_json "${videosPath}\\4\\openpose" --net_resolution 320x320 --part_candidates`,
         {
             cwd: 'C:\\collage\\final\\openpose\\openposeGPU'
         }, (error, stdout, stderr) => {
@@ -79,16 +79,16 @@ module.exports = {
          //Create new folder for the original video data
          try {
             fs.mkdirSync(`${videosPath}\\${origVideo.uri}`);
-           console.log(`Directory created successfully! - ${videosPath}\\4`);
+            console.log(`Directory created successfully! - ${videosPath}\\${origVideo.uri}`);
 
         } catch (error) {
             console.log('Directory Create Failed!');
             res.status(500);
-              return res.send(`failed create directory ${origVideo.uri} \n error ${error}`);
+            return res.send(`failed create directory ${origVideo.uri} \n error ${error}`);
         }
 
         //Run OpenPose
-        exec(`bin\\OpenPoseDemo.exe --video ${origVideo.uri} --write_json ${videosPath}\\${origVideo.id}\\openpose --net_resolution 320x320 --part_candidates`,
+        exec(`bin\\OpenPoseDemo.exe --video "${origVideo.uri}" --write_json "${videosPath}\\${origVideo.id}\\openpose" --net_resolution 320x320 --part_candidates`,
         {
             cwd: 'C:\\collage\\final\\openpose\\openposeGPU'
         }, async (error, stdout, stderr) => {
