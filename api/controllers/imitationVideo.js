@@ -43,7 +43,9 @@ module.exports = {
         await admin.messaging().send({
           "data": {
               "title": "Are you ready?",
-              "message": "Tap here to find out your score"
+              "message": "Tap here to find out your score",
+              "score": result[0],
+              "sourceId": sourceId
            },
           "token": deviceToken
         });
