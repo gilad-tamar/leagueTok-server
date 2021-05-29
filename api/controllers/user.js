@@ -8,7 +8,7 @@ const USERS_COLL = "users"
 
 module.exports = {
     connect: async(req, res) => {
-        const { uid, fullName} = req.body;
+        const { uid, fullName, photoUrl } = req.body;
         var timestamp = admin.firestore.FieldValue.serverTimestamp();
         const ref = database.collection('users')
 
@@ -23,6 +23,7 @@ module.exports = {
 
         await ref.doc(uid).set({
             name: fullName,
+            photoUrl: photoUrl,
             lastUpdated: timestamp,
             isDeleted: false
         });
