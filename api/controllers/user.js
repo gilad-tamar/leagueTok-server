@@ -41,6 +41,7 @@ module.exports = {
             users.push(new User(
                 doc.id, 
                 data.name,
+                data.photoUrl,
                 data.lastUpdated._seconds, 
                 data.isDeleted
             ));
