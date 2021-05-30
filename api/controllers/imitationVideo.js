@@ -25,11 +25,8 @@ module.exports = {
     }
     
     snapshot.forEach((doc) => {
-      // .then((querySnapshot) => {
-        // querySnapshot.forEach((doc) => {
         data = doc.data();
 //      ImitVideo exists
-
         imitVideo = new ImitationVideo(doc.id, data.url, data.uid, data.sourceId, data.score, data.uploadDate, data.lastUpdated,
                                        data.isDeleted);
     });
