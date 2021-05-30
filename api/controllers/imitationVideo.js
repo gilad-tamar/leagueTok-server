@@ -57,17 +57,22 @@ module.exports = {
           res.send('Failed on python');
           return;
         }
+        var randomScore = Math.floor(Math.random() * 101);
+        // var randomScore = 69;
 //      If the record is new
         if (isNew) {
-          imitVideo.score = Math.round(Number(result[0]));
+          // imitVideo.score = Math.round(Number(result[0]));
+          imitVideo.score = randomScore;
           await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update(imitVideo.getObject());
 
         } else {
 //        The record is not new
 //        Does this dance better than what exists already? If yes update, else don't. 
-          if (imitVideo.score < Number(result[0])) {
+          // if (imitVideo.score < Number(result[0])) {
+            if (imitVideo.score < randomScore) {
 
-            imitVideo.score = Number(result[0])
+            // imitVideo.score = Number(result[0])
+            imitVideo.score = randomScore
     
             try{
               await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update({
@@ -88,13 +93,16 @@ module.exports = {
           "data": {
               "title": "Are you ready?",
               "message": "Tap here to find out your score",
-              "score": (Math.round(Number(result[0]))).toString(),
+              // "score": (Math.round(Number(result[0]))).toString(),
+              "score": randomScore.toString(),
               "sourceId": sourceId
            },
           "token": deviceToken
         });
 
-        res.send({"result": (Math.round(Number(result[0]))).toString()})
+        // res.send({"result": (Math.round(Number(result[0]))).toString()})
+        res.send({"result": randomScore.toString()})
+        
 
       });
     } catch(err){
