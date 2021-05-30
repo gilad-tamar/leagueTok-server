@@ -4,6 +4,7 @@ const admin = require('firebase-admin');
 const {PythonShell} =require('python-shell'); 
 const ImitationVideo = require('../models/imitationVideo');
 const IMITATION_VIDEOS_COLL = "imitationVideos";
+const USERS_COLL = "users"
 
 module.exports = {
     createVideo: async(req, res) => {
@@ -14,9 +15,8 @@ module.exports = {
     try{
       imitVideo.id = (await database.collection(IMITATION_VIDEOS_COLL).add(imitVideo.getObject())).id
     } catch(err){
-      console.log('Failed')
-      res.status(500)
-      res.send('failed')
+      console.log('Failed to get imit id')
+      return res.status(500).send('failed')
     }
 
     let options = { 
@@ -35,10 +35,20 @@ module.exports = {
         try{
           await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update(imitVideo.getObject());
         } catch(err){
-          console.log('Failed')
-          res.status(500)
-          res.send('failed')
+          console.log('Failed to update imit score')
+          return res.status(500).send('failed')
         }
+
+        const deviceToken = (await database.collection(USERS_COLL).doc(uid).get()).data().deviceToken
+        await admin.messaging().send({
+          "data": {
+              "title": "Are you ready?",
+              "message": "Tap here to find out your score",
+              "score": result[0],
+              "sourceId": sourceId
+           },
+          "token": deviceToken
+        });
 
         res.send({"result": result[0]})
       });
