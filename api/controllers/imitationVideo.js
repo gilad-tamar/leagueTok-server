@@ -4,6 +4,7 @@ const admin = require('firebase-admin');
 const {PythonShell} =require('python-shell'); 
 const ImitationVideo = require('../models/imitationVideo');
 const IMITATION_VIDEOS_COLL = "imitationVideos";
+const USERS_COLL = "users"
 
 module.exports = {
     createVideo: async(req, res) => {
@@ -19,9 +20,8 @@ module.exports = {
       var snapshot = await database.collection(IMITATION_VIDEOS_COLL).where("sourceId", "==", sourceId).where("uid", "==", uid)
       .get();    
     } catch(err){
-      console.log('Failed')
-      res.status(500)
-      res.send('failed')
+      console.log('Failed to get imit id')
+      return res.status(500).send('failed')
     }
     
     snapshot.forEach((doc) => {
@@ -46,16 +46,6 @@ module.exports = {
       }
     } 
 
-    // var imitVideo = new ImitationVideo(null, link, uid, sourceId, 0, timestamp, timestamp, false);
-
-    // try{
-    //   imitVideo.id = (await database.collection(IMITATION_VIDEOS_COLL).add(imitVideo.getObject())).id
-    // } catch(err){
-    //   console.log('Failed')
-    //   res.status(500)
-    //   res.send('failed')
-    // }
-
     let options = { 
       args: ["./videos/1/openpose", "./videos/1/Imitations/1/openpose"] //An argument which can be accessed in the script using sys.argv[1]
     }; 
@@ -78,9 +68,7 @@ module.exports = {
           if (imitVideo.score < Number(result[0])) {
 
             imitVideo.score = Number(result[0])
-  
-           // Round the score
-  
+    
             try{
               await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update({
                 score: Math.round(imitVideo.score), 
@@ -89,19 +77,29 @@ module.exports = {
                 lastUpdated: timestamp 
               });
             } catch(err){
-              console.log('Failed')
-              res.status(500)
-              res.send('failed')
+              console.log('Failed to update imit score')
+              return res.status(500).send('failed')
             }
           }  
         }
+        
+        const deviceToken = (await database.collection(USERS_COLL).doc(uid).get()).data().deviceToken
+        await admin.messaging().send({
+          "data": {
+              "title": "Are you ready?",
+              "message": "Tap here to find out your score",
+              "score": (Math.round(Number(result[0]))).toString(),
+              "sourceId": sourceId
+           },
+          "token": deviceToken
+        });
+
         res.send({"result": (Math.round(Number(result[0]))).toString()})
-        // res.send({"result": result[0]})
+
       });
     } catch(err){
       console.log(err)
     }
-    
   },
 
   getAll: async (req, res) => {

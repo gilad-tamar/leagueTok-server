@@ -41,6 +41,7 @@ module.exports = {
             users.push(new User(
                 doc.id, 
                 data.name,
+                data.photoUrl,
                 data.lastUpdated._seconds, 
                 data.isDeleted
             ));
@@ -53,5 +54,17 @@ module.exports = {
 
         res.status(200).send(user.data());
     },
+    registerDeviceToken: async(req, res) => {
+        const { uid, token } = req.body;
+        const docUser = await database.collection(USERS_COLL).doc(uid).get();
+        
+        if (docUser.exists) {
+            await database.collection(USERS_COLL).doc(uid).update({ deviceToken: token });
+            return res.sendStatus(200);
 
+        }
+        else {
+            return res.status(404).send("user not found")
+        }
+    },
 }
