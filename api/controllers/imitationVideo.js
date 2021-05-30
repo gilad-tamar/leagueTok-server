@@ -10,14 +10,41 @@ module.exports = {
     createVideo: async(req, res) => {
     const { sourceId, link, uid } = req.body;
     var timestamp = admin.firestore.FieldValue.serverTimestamp();
-    var imitVideo = new ImitationVideo(null, link, uid, sourceId, 0, timestamp, timestamp, false);
+
+//  Check if uid and sourceId allready exits in the db. 
+//  If so, update the record instead of creating a new one.
+    var imitVideo = null;
+    var isNew = false;
 
     try{
-      imitVideo.id = (await database.collection(IMITATION_VIDEOS_COLL).add(imitVideo.getObject())).id
+      var snapshot = await database.collection(IMITATION_VIDEOS_COLL).where("sourceId", "==", sourceId).where("uid", "==", uid)
+      .get();    
     } catch(err){
       console.log('Failed to get imit id')
       return res.status(500).send('failed')
     }
+    
+    snapshot.forEach((doc) => {
+        data = doc.data();
+//      ImitVideo exists
+        imitVideo = new ImitationVideo(doc.id, data.url, data.uid, data.sourceId, data.score, data.uploadDate, data.lastUpdated,
+                                       data.isDeleted);
+    });
+    // });
+
+//  ImitVideo does not exists
+    if (imitVideo == null) {
+      isNew = true;
+      imitVideo = new ImitationVideo(null, link, uid, sourceId, 0, timestamp, timestamp, false);
+
+      try{
+        imitVideo.id = (await database.collection(IMITATION_VIDEOS_COLL).add(imitVideo.getObject())).id
+      } catch(err){
+        console.log('Failed')
+        res.status(500)
+        res.send('failed')
+      }
+    } 
 
     let options = { 
       args: ["./videos/1/openpose", "./videos/1/Imitations/1/openpose"] //An argument which can be accessed in the script using sys.argv[1]
@@ -30,32 +57,57 @@ module.exports = {
           res.send('Failed on python');
           return;
         }
-        imitVideo.score = Number(result[0])
-
-        try{
+        var randomScore = Math.floor(Math.random() * 101);
+        // var randomScore = 69;
+//      If the record is new
+        if (isNew) {
+          // imitVideo.score = Math.round(Number(result[0]));
+          imitVideo.score = randomScore;
           await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update(imitVideo.getObject());
-        } catch(err){
-          console.log('Failed to update imit score')
-          return res.status(500).send('failed')
-        }
 
+        } else {
+//        The record is not new
+//        Does this dance better than what exists already? If yes update, else don't. 
+          // if (imitVideo.score < Number(result[0])) {
+            if (imitVideo.score < randomScore) {
+
+            // imitVideo.score = Number(result[0])
+            imitVideo.score = randomScore
+    
+            try{
+              await database.collection(IMITATION_VIDEOS_COLL).doc(imitVideo.id).update({
+                score: Math.round(imitVideo.score), 
+                url: link, 
+                uploadDate: timestamp,
+                lastUpdated: timestamp 
+              });
+            } catch(err){
+              console.log('Failed to update imit score')
+              return res.status(500).send('failed')
+            }
+          }  
+        }
+        
         const deviceToken = (await database.collection(USERS_COLL).doc(uid).get()).data().deviceToken
         await admin.messaging().send({
           "data": {
               "title": "Are you ready?",
               "message": "Tap here to find out your score",
-              "score": result[0],
+              // "score": (Math.round(Number(result[0]))).toString(),
+              "score": randomScore.toString(),
               "sourceId": sourceId
            },
           "token": deviceToken
         });
 
-        res.send({"result": result[0]})
+        // res.send({"result": (Math.round(Number(result[0]))).toString()})
+        res.send({"result": randomScore.toString()})
+        
+
       });
     } catch(err){
       console.log(err)
     }
-    
   },
 
   getAll: async (req, res) => {
